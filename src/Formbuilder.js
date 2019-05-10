@@ -64,8 +64,6 @@ class FormBuilder extends React.Component {
   }
 
   onMixedChange = (fieldSchema, parent_uid, {keyChange, key} = {}, e) => {
-    console.log(parent_uid, keyChange, key)
-
     let uid = fieldSchema.uid
 
     if(parent_uid) {

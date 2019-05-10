@@ -2,7 +2,7 @@ import React from 'react';
 import Formbuilder from './Formbuilder';
 // import FilterableProductTable from './FilterableProductTable';
 import './App.css';
-import schema from './schema';
+import schema from './schema.json';
 
 const data = {
   // version: "1.1.1",

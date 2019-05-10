@@ -20,11 +20,10 @@ class FormBuilderView extends React.Component {
                     <label>{fieldSchema.label}</label>
                     { fieldSchema.required && <span>*</span>}
                     <textarea 
-                      placeholder  = {fieldSchema.metadata.placeholder} 
-                      id           = {uid} 
-                      defaultValue = {fieldSchema.default}
-                      ref          = {data[fieldSchema.uid]}
-                      onChange     = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
+                      placeholder = {fieldSchema.metadata.placeholder} 
+                      id          = {uid} 
+                      value       = {data[fieldSchema.uid] || ""}
+                      onChange    = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
                     ></textarea>
                     <br></br>
                   </div>
@@ -37,11 +36,10 @@ class FormBuilderView extends React.Component {
                     <label>{fieldSchema.label}</label>
                     { fieldSchema.required && <span>*</span>}
                     <select 
-                      placeholder  = {fieldSchema.metadata.placeholder} 
-                      id           = {uid} 
-                      defaultValue = {fieldSchema.default}
-                      ref           = {data[fieldSchema.uid]}
-                      onChange     = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
+                      placeholder = {fieldSchema.metadata.placeholder} 
+                      id          = {uid} 
+                      value       = {data[fieldSchema.uid]}
+                      onChange    = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
                     >
                       <option val={""}>Select One</option>
                       {fieldSchema.metadata.enum.map(val => [
@@ -59,12 +57,11 @@ class FormBuilderView extends React.Component {
                 <label>{fieldSchema.label}</label>
                 { fieldSchema.required && <span>*</span>}
                 <input 
-                  type         = "text" 
-                  placeholder  = {fieldSchema.metadata.placeholder} 
-                  id           = {uid} 
-                  defaultValue = {fieldSchema.default}
-                  ref          = {data[fieldSchema.uid]}
-                  onChange     = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
+                  type        = "text" 
+                  placeholder = {fieldSchema.metadata.placeholder} 
+                  id          = {uid} 
+                  value       = {data[fieldSchema.uid] || ""}
+                  onChange    = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
                 ></input>
                 <br></br>
               </div>
@@ -76,11 +73,10 @@ class FormBuilderView extends React.Component {
               <div key={uid}>
                 <label>{fieldSchema.label}</label>
                 <input 
-                  type           = "checkbox" 
-                  id             = {uid} 
-                  defaultChecked = {fieldSchema.default}
-                  ref            = {data[fieldSchema.uid]}
-                  onChange       = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
+                  type     = "checkbox" 
+                  id       = {uid} 
+                  checked  = {data[fieldSchema.uid] || false}
+                  onChange = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
                 ></input>
                 <br></br>
               </div>
@@ -127,7 +123,7 @@ class FormBuilderView extends React.Component {
                         <input 
                           type     = "text" 
                           id       = {`${uid}.${key}.value`} 
-                          value    = {fieldData[key]}
+                          value    = {fieldData[key] || ""}
                           onChange = {this.props.onMixedChange.bind(this, fieldSchema, this.props.parent_uid, {key: key})}
                         ></input>
                         <button 
@@ -162,8 +158,7 @@ class FormBuilderView extends React.Component {
                           type        = "text" 
                           placeholder = {fieldSchema.metadata.placeholder} 
                           id          = {`${uid}.${index}`} 
-                          ref         = {fieldSchema.default}
-                          value       = {(data[fieldSchema.uid] && data[fieldSchema.uid][index])}
+                          value       = {(data[fieldSchema.uid] && data[fieldSchema.uid][index]) || ""}
                           onChange    = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
                         ></input>
                         <button 
