@@ -1,0 +1,17 @@
+#main{
+  margin: 5px
+}
+
+#FormBuilderView {
+  float: left;
+  width: 50%;
+}
+
+#JSONView{
+  float: left;
+  width: 50%;
+}
+
+#JSONView textarea{
+  width: 100%
+}
