@@ -5,7 +5,7 @@ import './App.css';
 import schema from './schema.json';
 
 const data = {
-  // version: "1.1.1",
+  version: "1.1.1",
   // latest_app_version: {
   //   ios_version: "1.1.1"
   // },
@@ -25,8 +25,9 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      schema: schema,
-      showForm: false
+      schema  : schema,
+      data    : data,
+      showForm: true
     }
   }
 
@@ -36,7 +37,7 @@ class App extends React.Component {
     })
   }
 
-  onChange = (e) => {
+  onSchemaChange = (e) => {
     let schema = this.state.schema
     try {
       schema = JSON.parse(e.target.value)
@@ -49,13 +50,33 @@ class App extends React.Component {
     })
   }
 
+  onDataChange = (e) => {
+    let data = this.state.data
+    try {
+      data = JSON.parse(e.target.value)
+    } catch (error) {
+
+    }
+
+    this.setState({
+      data
+    })
+  }
+
   render(){
     return (
       <div className="App">
         {
           !this.state.showForm && <div>
             <button onClick={this.onClick}>Render Schema</button><br></br>
-            <textarea rows={50} defaultValue={JSON.stringify(this.state.schema, null, 2)} onChange={this.onChange}></textarea>
+            <div className="schema">
+              <label>Schema</label><br></br>
+              <textarea rows={50} defaultValue={JSON.stringify(this.state.schema, null, 2)} onChange={this.onSchemaChange}></textarea>
+            </div>
+            <div className="data">
+              <label>Data</label><br></br>
+              <textarea rows={50} defaultValue={JSON.stringify(this.state.data, null, 2)} onChange={this.onDataChange}></textarea>
+            </div>
           </div>
         }
         {

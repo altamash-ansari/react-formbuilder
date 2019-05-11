@@ -243,7 +243,7 @@
       "uid": "ios_version",
       "type": "string",
       "required": false,
-      "multiple": false,
+      "multiple": true,
       "metadata": {
         "ref_to": null,
         "rte": null,

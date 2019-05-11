@@ -37,7 +37,6 @@ class FormBuilder extends React.Component {
 
     let delta = this.state.delta
 
-    // let value = fieldSchema.type === "group" ? {} : ""
     let value = fieldSchema.type === "string" ? "" : {}
 
     addValue(delta, uid.split("."), fieldSchema, value)
@@ -79,6 +78,38 @@ class FormBuilder extends React.Component {
     })
   }
 
+  onTagAdd = (fieldSchema, parent_uid, e) => {
+    let uid = fieldSchema.uid
+
+    if(parent_uid) {
+      uid = `${parent_uid}.${uid}`
+    }
+
+    let delta = this.state.delta
+
+    addTagValue(delta, uid.split("."), fieldSchema, e.target.value)
+
+    this.setState({
+      delta
+    })
+  }
+
+  onTagRemove = (fieldSchema, parent_uid, index, e) => {
+    let uid = fieldSchema.uid
+
+    if(parent_uid) {
+      uid = `${parent_uid}.${uid}`
+    }
+
+    let delta = this.state.delta
+
+    removeTagValue(delta, uid.split("."), fieldSchema, index)
+
+    this.setState({
+      delta
+    })
+  }
+
   componentDidMount(){
     const delta = Object.assign({}, this.props.data)
 
@@ -99,6 +130,8 @@ class FormBuilder extends React.Component {
             onAdd         = {this.onAdd}
             onDelete      = {this.onDelete}
             onMixedChange = {this.onMixedChange}
+            onTagAdd      = {this.onTagAdd}
+            onTagRemove   = {this.onTagRemove}
           />
         </div>
         <div id="JSONView">
@@ -178,12 +211,7 @@ function removeValue(obj, pathArr, fieldSchema, index) {
   }
   else {
     // filtered out the incoming index from array
-    obj[currentPath] = obj[currentPath].filter((data, i) => {
-      if(index === i)
-        return false
-
-      return true
-    })
+    obj[currentPath].splice(index,1)
   }
 } 
 
@@ -213,6 +241,35 @@ function assignMixedValue(obj, pathArr, fieldSchema, keyChange, key, value) {
     else{
       obj[currentPath][key] = value
     }
+  }
+}
+
+function addTagValue(obj, pathArr, fieldSchema, value){
+  let currentPath  = pathArr[0]
+
+  pathArr.shift()
+  if(pathArr.length){
+    obj[currentPath] = obj[currentPath] || {}
+
+    addTagValue(obj[currentPath], pathArr, fieldSchema, value)
+  }
+  else{
+    obj[currentPath] = obj[currentPath] || []
+    obj[currentPath].push(value)
+  }
+}
+
+function removeTagValue(obj, pathArr, fieldSchema, index){
+  let currentPath  = pathArr[0]
+
+  pathArr.shift()
+  if(pathArr.length){
+    obj[currentPath] = obj[currentPath] || {}
+
+    removeTagValue(obj[currentPath], pathArr, fieldSchema, index)
+  }
+  else{
+    obj[currentPath].splice(index,1)
   }
 }
 

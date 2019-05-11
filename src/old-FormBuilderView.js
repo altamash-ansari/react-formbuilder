@@ -1,5 +1,4 @@
 import React from 'react'
-import Tags from './Tags'
 
 class FormBuilderView extends React.Component {
   render() {
@@ -96,8 +95,6 @@ class FormBuilderView extends React.Component {
                   onAdd         = {this.props.onAdd}
                   onDelete      = {this.props.onDelete}
                   onMixedChange = {this.props.onMixedChange}
-                  onTagAdd      = {this.props.onTagAdd}
-                  onTagRemove   = {this.props.onTagRemove}
                 />
               </fieldset>
             )
@@ -149,12 +146,29 @@ class FormBuilderView extends React.Component {
             return (
               <div key={uid}>
                 <label>{fieldSchema.label}</label>
-                <Tags 
-                  tags        = {fieldDataArr}
-                  uid         = {uid}
-                  onTagAdd    = {this.props.onTagAdd.bind(this, fieldSchema, this.props.parent_uid)}
-                  onTagRemove = {this.props.onTagRemove.bind(this, fieldSchema, this.props.parent_uid)}
-                />
+                <button 
+                  id      = {`${uid}_addbutton`}
+                  onClick = {this.props.onAdd.bind(this, fieldSchema, this.props.parent_uid)}
+                >Add</button>
+                {
+                  fieldDataArr.map((fieldData, index) => {
+                    return (
+                      <div key = {`${uid}.${index}`} >
+                        <input 
+                          type        = "text" 
+                          placeholder = {fieldSchema.metadata.placeholder} 
+                          id          = {`${uid}.${index}`} 
+                          value       = {(data[fieldSchema.uid] && data[fieldSchema.uid][index]) || ""}
+                          onChange    = {this.props.onChange.bind(this, fieldSchema, this.props.parent_uid)}
+                        ></input>
+                        <button 
+                          id      = {`${uid}.${index}_delbutton`}
+                          onClick = {this.props.onDelete.bind(this, fieldSchema, this.props.parent_uid, index)}
+                        >Delete</button>
+                      </div>
+                    )
+                  })
+                }
                 <br></br>
               </div>
             )
@@ -184,8 +198,6 @@ class FormBuilderView extends React.Component {
                           onAdd         = {this.props.onAdd}
                           onDelete      = {this.props.onDelete}
                           onMixedChange = {this.props.onMixedChange}
-                          onTagAdd      = {this.props.onTagAdd}
-                          onTagRemove   = {this.props.onTagRemove}
                         />
                         <button 
                           id      = {`${uid}.${index}_delbutton`}

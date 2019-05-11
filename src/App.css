@@ -2,6 +2,22 @@
   margin: 10px
 }
 
-.App textarea{
-  width: 100%
+.schema{
+  float: left;
+  width: 50%;
+  margin: 1px
+}
+
+.schema textarea{
+  width: 100%;
+}
+
+.data{
+  float: right;
+  width: 49%;
+  margin: 1px
+}
+
+.data textarea{
+  width: 100%;
 }
