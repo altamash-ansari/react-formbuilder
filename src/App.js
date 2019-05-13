@@ -5,19 +5,19 @@ import './App.css';
 import schema from './schema.json';
 
 const data = {
-  version: "1.1.1",
-  // latest_app_version: {
-  //   ios_version: "1.1.1"
+  "version": "1.1.1",
+  // "latest_app_version": {
+  //   "ios_version": "1.1.1"
   // },
-  // app_db_reset: ["1.1.1", "1.1.2"],
-  // thirdparty_app_deeplink: [{
-  //   app_name: "uber"
+  // "app_db_reset": ["1.1.1", "1.1.2"],
+  // "thirdparty_app_deeplink": [{
+  //   "app_name": "uber"
   // },{
-  //   app_name: "ola"
+  //   "app_name": "ola"
   // }],
-  // config:{
-  //   data: "adad",
-  //   nba: "aa"
+  // "config":{
+  //   "data": "adad",
+  //   "nba": "aa"
   // }
 }
 
@@ -82,7 +82,7 @@ class App extends React.Component {
         {
           this.state.showForm && <div>
             <button onClick={this.onClick}>Edit Schema</button>
-            <Formbuilder schema={this.state.schema} data={data}/>
+            <Formbuilder schema={this.state.schema} data={this.state.data}/>
           </div>
         }
       </div>
