@@ -28,7 +28,7 @@ class FormBuilder extends React.Component {
     })
   }
 
-  onAdd = (fieldSchema, parent_uid, e) => {
+  onAdd = (fieldSchema, parent_uid, data, e) => {
     let uid = fieldSchema.uid
 
     if(parent_uid) {
@@ -37,9 +37,7 @@ class FormBuilder extends React.Component {
 
     let delta = this.state.delta
 
-    let value = fieldSchema.type === "string" ? "" : {}
-
-    addValue(delta, uid.split("."), fieldSchema, value)
+    addValue(delta, uid.split("."), fieldSchema, data)
 
     this.setState({
       delta
@@ -183,14 +181,13 @@ function addValue(obj, pathArr, fieldSchema, value) {
     return addValue(obj[currentPath], pathArr, fieldSchema, value)
   }
   else {
-    // string field we need to push the data
     if(fieldSchema.multiple) {
       obj[currentPath].push(value)
     }
     else if(fieldSchema.type === "mixed") {
       obj[currentPath] = {
         ...obj[currentPath],
-        [`key_${makeid(5)}`]: ""
+        ...value
       }
     }
     else {
@@ -271,16 +268,6 @@ function removeTagValue(obj, pathArr, fieldSchema, index){
   else{
     obj[currentPath].splice(index,1)
   }
-}
-
-function makeid(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
 }
 
 export default FormBuilder

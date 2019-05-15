@@ -1,5 +1,6 @@
 import React from 'react'
 import Tags from './Tags'
+import CustomKeys from './CustomKeys'
 
 class FormBuilderView extends React.Component {
   render() {
@@ -104,41 +105,17 @@ class FormBuilderView extends React.Component {
           }
 
           if(fieldSchema.type === "mixed") {
-            let fieldData = data[fieldSchema.uid] || {};
-
             return (
-              <fieldset key={uid}>
-                <legend>{fieldSchema.label}</legend>
-                <button 
-                  id      = {`${uid}_addbutton`}
-                  onClick = {this.props.onAdd.bind(this, fieldSchema, this.props.parent_uid)}
-                >Add</button>
-                {
-                  Object.keys(fieldData).map((key, index) => {
-                    return (
-                      <div key={`${uid}.${index}`} >
-                        <input 
-                          type     = "text" 
-                          id       = {`${uid}.${key}.key`} 
-                          value    = {key}
-                          onChange = {this.props.onMixedChange.bind(this, fieldSchema, this.props.parent_uid, {keyChange: true, key: key})}
-                        ></input>
-                        <input 
-                          type     = "text" 
-                          id       = {`${uid}.${key}.value`} 
-                          value    = {fieldData[key] || ""}
-                          onChange = {this.props.onMixedChange.bind(this, fieldSchema, this.props.parent_uid, {key: key})}
-                        ></input>
-                        <button 
-                          id      = {`${uid}.${key}_delbutton`}
-                          onClick = {this.props.onDelete.bind(this, fieldSchema, this.props.parent_uid, key)}
-                        >Delete</button>
-                      </div>
-                    )
-                  })
-                }
-                <br></br>
-              </fieldset>
+              <CustomKeys
+                key           = {uid}
+                uid           = {uid}
+                data          = {data[fieldSchema.uid] || {}}
+                fieldSchema   = {fieldSchema}
+                parent_uid    = {this.props.parent_uid} 
+                onAdd         = {this.props.onAdd}
+                onMixedChange = {this.props.onMixedChange}
+                onDelete      = {this.props.onDelete}
+              />
             )
           }
         }
@@ -168,7 +145,7 @@ class FormBuilderView extends React.Component {
                 <legend>{fieldSchema.label}</legend>
                 <button 
                   id      = {`${uid}_addbutton`}
-                  onClick = {this.props.onAdd.bind(this, fieldSchema, this.props.parent_uid)}
+                  onClick = {this.props.onAdd.bind(this, fieldSchema, this.props.parent_uid, {})}
                 >Add</button>
                 {
                   fieldDataArr.map((fieldData, index) => {
